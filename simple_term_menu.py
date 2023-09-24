@@ -102,7 +102,8 @@ class UnknownMenuEntryError(Exception):
 def get_locale() -> str:
     user_locale = locale.getlocale()[1]
     if user_locale is None:
-        return "ascii"
+        locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+        return "UTF-8"
     else:
         return user_locale.lower()
 
@@ -1270,7 +1271,7 @@ class TerminalMenu:
                             BoxDrawingCharacters.upper_left
                             + (2 * BoxDrawingCharacters.horizontal + " " + self._preview_title)[: num_cols - 3]
                             + " "
-                            + (num_cols - wcswidth(self._preview_title) - 6) * BoxDrawingCharacters.horizontal
+                            + (num_cols - len(self._preview_title) - 6) * BoxDrawingCharacters.horizontal
                             + BoxDrawingCharacters.upper_right
                         )[:num_cols]
                         + "\n"
